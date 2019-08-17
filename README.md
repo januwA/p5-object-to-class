@@ -1,0 +1,1 @@
+> 把js对象转换为Swagger class
