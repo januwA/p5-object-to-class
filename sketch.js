@@ -13,6 +13,7 @@ let outputElt;
 
 // select
 let selectEle;
+let dtoSelectEle;
 
 // editor
 let inputMirror;
@@ -25,6 +26,7 @@ function setup() {
   transformBtn = select("#transform");
   outputElt = select("#built_value");
   selectEle = select("#select");
+  dtoSelectEle = select("#dtoSelect");
 
   inputMirror = CodeMirror.fromTextArea(inputElt.elt, {
     lineNumbers: true,
@@ -40,6 +42,7 @@ function setup() {
 
   transformBtn.mouseClicked(transform);
   selectEle.changed(selectChanged);
+  dtoSelectEle.changed(dtoSelectChanged);
 }
 
 // 点击转换按钮
@@ -72,4 +75,9 @@ function selectChanged() {
     objectText = inputMirror.getValue().trim();
     inputMirror.setValue(jsonText);
   }
+}
+
+function dtoSelectChanged() {
+  let v = dtoSelectEle.value().trim();
+  BuiltValueAttr.nameStr = v == 1 ? "Class" : "Dto";
 }

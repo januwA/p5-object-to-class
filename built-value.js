@@ -122,7 +122,7 @@ export class ${k} {${attrs}
     type: ${type},
     ${exampleString}
   })
-  ${k}: ${type}${isList ? "[]" : ""};`;
+  readonly ${k}: ${type}${isList ? "[]" : ""};`;
   }
   createType(v) {
     let type;
