@@ -93,8 +93,10 @@ class BuiltValue {
 
       resultString =
         `
+
 // ${k}
 export class ${k} {${attrs}
+
 }` + resultString;
     }
     return resultString;
@@ -102,7 +104,7 @@ export class ${k} {${attrs}
 
   // 添加头文件
   addHeader(resultString) {
-    let header = `import { ApiModelProperty } from '@nestjs/swagger';`;
+    let header = `import { ApiProperty } from '@nestjs/swagger';`;
     return header + resultString;
   }
 
@@ -113,16 +115,15 @@ export class ${k} {${attrs}
     }
 
     let isClass = _.endsWith(type, BuiltValueAttr.nameStr);
-    let exampleString = isClass ? `` : `example: ${example},`;
+    let exampleString = isClass ? `example: ${JSON.stringify(example)},` : `example: ${example},`;
     let isArrayString = isList ? `isArray: true,` : ``;
     return `
   
-  @ApiModelProperty({
-    ${isArrayString}
-    type: ${type},
+  @ApiProperty({
+    type: ${isArrayString ? `[${type}]` :type},
     ${exampleString}
   })
-  readonly ${k}: ${type}${isList ? "[]" : ""};`;
+  readonly ${k}: ${isClass ? type : _.lowerCase(type)}${isList ? "[]" : ""};`;
   }
   createType(v) {
     let type;
